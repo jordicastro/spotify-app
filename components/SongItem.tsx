@@ -3,6 +3,7 @@
 import { Song } from "@/types";
 import { Play } from "lucide-react";
 import Image from "next/image";
+import PlayButton from "./PlayButton";
 
 interface SongItemProps {
     data: Song;
@@ -19,7 +20,7 @@ const SongItem = ({data, onClick}: SongItemProps) => {
         >
             <Image
                 className="object-cover"
-                src={data.album_cover_href || "/images/album_placeholder.png"}
+                src={data.album_cover_url || "/images/media_item_placeholder.svg"}
                 fill
                 alt="image"
             />
@@ -37,9 +38,9 @@ const SongItem = ({data, onClick}: SongItemProps) => {
         </div>
 
         <div
-            className="hidden group-hover:flex hover:scale-105 absolute transition p-3 rounded-full bg-indigo-500 items-center justify-center drop-shadow-md right-3 bottom-3"
+            className="absolute right-3 bottom-3"
         >
-            <Play className="w-5 h-5 text-black fill-black"/>
+            <PlayButton size="sm"/>
         </div>
 
     </div>

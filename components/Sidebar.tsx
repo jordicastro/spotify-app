@@ -6,6 +6,7 @@ import { House as Home, Search } from "lucide-react";
 import Box from "./Box";
 import SidebarItem from "./SidebarItem";
 import Library from "./Library";
+import { songs } from "@/testSongs";
 
 interface SidebarProps {
     children: React.ReactNode;
@@ -48,7 +49,7 @@ const Sidebar = ({children}: SidebarProps) => {
                 </div>
             </Box>
             <Box className="overflow-y-auto h-full">
-                <Library />
+                <Library songs={songs}/>
             </Box>
         </div>
         <main className="h-full flex-1 overflow-y-auto py-2">

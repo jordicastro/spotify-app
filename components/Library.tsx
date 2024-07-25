@@ -1,8 +1,13 @@
 "use client";
-
+import { Song } from "@/types";
 import { ListMusic as PlaylistIcon, Plus as PlusIcon } from "lucide-react";
+import MediaItem from "./MediaItem";
 
-const Library = () => {
+interface LibraryProps {
+    songs: Song[];
+}
+
+const Library = ({songs}: LibraryProps) => {
 
     const onClick = () => {
         // Handle upload later
@@ -32,7 +37,13 @@ const Library = () => {
         <div
             className="flex flex-col gap-y-2 mt-4 px-3"
         >
-            List of Songs
+            {songs.map ( (song) => (
+                <MediaItem
+                    onClick={() => {}}
+                    key={song.id}
+                    data={song}
+                />
+            ))}
         </div>
     </div>
   )

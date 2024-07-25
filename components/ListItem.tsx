@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Play } from "lucide-react";
+import PlayButton from "./PlayButton";
 
 interface ListItemProps {
     image: string;
@@ -21,7 +22,8 @@ const ListItem = ({image, name, href}: ListItemProps) => {
     }
 
     return (
-    <button
+    <div
+        role="button"
         onClick={onClick}
         className="relative group flex items-center rounded-md overflow-hidden gap-x-4 bg-neutral-100/10 hover:bg-neutral-100/20 transition pr-4"
     >
@@ -40,11 +42,11 @@ const ListItem = ({image, name, href}: ListItemProps) => {
             </p>
 
             <div
-                className="hidden group-hover:flex hover:scale-105 absolute transition p-3 rounded-full bg-indigo-500 items-center justify-center drop-shadow-md right-5"
+                className="absolute right-2"
             >
-                <Play className="w-5 h-5 text-black fill-black"/>
+                <PlayButton />
             </div>
-    </button>
+    </div>
     )
 }
 
