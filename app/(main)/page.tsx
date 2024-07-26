@@ -1,15 +1,13 @@
 import Button from "@/components/Button";
 import Header from "@/components/Header";
 import HomeSection from "@/components/HomeSection";
-import ListItem from "@/components/ListItem";
-import { Song } from "@/types";
-import { Section } from "lucide-react";
+import PlaylistItem from "@/components/PlaylistItem";
 import { songs } from "@/testSongs";
 
 
-export default function Home() {
+export default async function Home() {
 
-  const isLoggedIn: boolean = true;
+  const isLoggedIn: boolean = false;
 
   const greeting = isLoggedIn ? "Jump back in" : "Welcome to Jotify";
 
@@ -28,10 +26,10 @@ export default function Home() {
           <div
             className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-4 gap-3 mt-4"
           >
-            <ListItem image="/images/liked.png" name={"Liked Songs"} href={"liked"} />
-            <ListItem image="/images/onRepeat.png" name={"On Repeat"} href={"on-repeat"} />
-            <ListItem image="/images/playlist1.svg" name={"Playlist 1"} href={"playlist1"} />
-            <ListItem image="/images/playlist2.svg" name={"Playlist 2"} href={"playlist2"} />
+            <PlaylistItem image="/images/liked.png" name={"Liked Songs"} href={"liked"} />
+            <PlaylistItem image="/images/onRepeat.png" name={"On Repeat"} href={"on-repeat"} />
+            <PlaylistItem image="/images/playlist1.svg" name={"Playlist 1"} href={"playlist1"} />
+            <PlaylistItem image="/images/playlist2.svg" name={"Playlist 2"} href={"playlist2"} />
 
           </div>
           ) : (
@@ -46,16 +44,16 @@ export default function Home() {
         </div>
       </Header>
 
-    {isLoggedIn && (
+    {/* {isLoggedIn && (
       <HomeSection
         title="Your Top 10 Albums of All Time"
         songs={songs}
         type="carousel"
       />
-    )}
+    )} */}
 
     <HomeSection
-      title="New Music"
+      title="New Releases"
       songs={songs}
       type="grid"
     />

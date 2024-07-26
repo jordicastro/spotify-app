@@ -5,14 +5,14 @@ import { useRouter } from "next/navigation";
 import { Play } from "lucide-react";
 import PlayButton from "./PlayButton";
 
-interface ListItemProps {
+interface PlaylistItemProps {
     image: string;
     name: string;
     href: string;
 
 }
 
-const ListItem = ({image, name, href}: ListItemProps) => {
+const PlaylistItem = ({image, name, href}: PlaylistItemProps) => {
 
     const router = useRouter();
 
@@ -50,4 +50,4 @@ const ListItem = ({image, name, href}: ListItemProps) => {
     )
 }
 
-export default ListItem
+export default PlaylistItem

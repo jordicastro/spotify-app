@@ -1,16 +1,19 @@
 "use client";
 
-import { Song } from "@/types";
+import { MediaItem, Song } from "@/types";
 import { Play } from "lucide-react";
 import Image from "next/image";
 import PlayButton from "./PlayButton";
 
-interface SongItemProps {
-    data: Song;
+interface MediaItemCardProps {
+    albumType: "album" | "single";
+    artists: string;
+    itemImageUrl: string;
+    itemName: string;
     onClick: (id: string) => void;
 }
 
-const SongItem = ({data, onClick}: SongItemProps) => {
+const MediaItemCard = ({ albumType, artists, itemImageUrl,itemName, onClick }: MediaItemCardProps) => {
   return (
     <div
         className="relative group flex flex-col justify-center items-center rounded-md overflow-hidden gap-x-4 p-3 bg-neutral-400/5 cursor-pointer hover:bg-neutral-400/10 transition"
@@ -20,7 +23,7 @@ const SongItem = ({data, onClick}: SongItemProps) => {
         >
             <Image
                 className="object-cover"
-                src={data.album_cover_url || "/images/media_item_placeholder.svg"}
+                src={itemImageUrl || "/images/media_item_placeholder.svg"}
                 fill
                 alt="image"
             />
@@ -30,10 +33,10 @@ const SongItem = ({data, onClick}: SongItemProps) => {
             className="flex flex-col items-start w-full p-4 gap-y-1"
         >
             <p className="font-semibold truncate w-full">
-                {data.title}
+                {itemName}
             </p>
             <p className="text-neutral-400 text-sm pb-4 w-full truncate">
-                {data.artist}
+                {artists}
             </p>
         </div>
 
@@ -47,4 +50,4 @@ const SongItem = ({data, onClick}: SongItemProps) => {
   )
 }
 
-export default SongItem
+export default MediaItemCard

@@ -2,12 +2,15 @@
 import { Song } from "@/types";
 import { ListMusic as PlaylistIcon, Plus as PlusIcon } from "lucide-react";
 import MediaItem from "./MediaItem";
+import { useSpotify } from "@/hooks/useSpotify";
 
 interface LibraryProps {
     songs: Song[];
 }
 
 const Library = ({songs}: LibraryProps) => {
+
+    const { isLoggedIn } = useSpotify();
 
     const onClick = () => {
         // Handle upload later
@@ -37,7 +40,7 @@ const Library = ({songs}: LibraryProps) => {
         <div
             className="flex flex-col gap-y-2 mt-4 px-3"
         >
-            {songs.map ( (song) => (
+            {isLoggedIn && songs.map ( (song) => (
                 <MediaItem
                     onClick={() => {}}
                     key={song.id}

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react'
 import { twMerge } from 'tailwind-merge';
 import Button from './Button';
+import Link from 'next/link';
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -52,17 +53,19 @@ const Header = ({children, className}: HeaderProps) => {
                 <div
                     className='flex md:hidden gap-x-6 items-center p-3 bg-black rounded-xl'
                 >
-                    <button
+                    <Link
                         className='hover:scale-110 group/home active:scale-125 ease-in-out transition'
+                        href='/'
                     >
-                        <HomeIcon className='w-5 h-5 text-neutral-500 group-hover/home:text-neutral-300'/>
-                    </button>
+                        <HomeIcon className='w-5 h-5 text-neutral-300 group-hover/home:text-neutral-100'/>
+                    </Link>
 
-                    <button
+                    <Link
                         className='hover:scale-110 group/search active:scale-125 ease-in-out transition'
+                        href="/search"
                     >
-                        <SearchIcon className='w-5 h-5 text-neutral-500 group-hover/search:text-neutral-300'/>
-                    </button>
+                        <SearchIcon className='w-5 h-5 text-neutral-300 group-hover/search:text-neutral-100'/>
+                    </Link>
 
                 </div>
 
