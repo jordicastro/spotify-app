@@ -54,7 +54,6 @@ export default async function Home() {
 
     <HomeSection
       title="New Releases"
-      songs={songs}
       type="grid"
     />
 

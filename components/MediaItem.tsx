@@ -5,14 +5,17 @@ import { Ellipsis } from "lucide-react";
 import Image from "next/image";
 
 interface MediaItemProps {
-    data: Song;
+    name: string;
+    imageUrl: string;
+    genres: string;
+    id: string;
     onClick: (id: string) => void;
 }
 
-const MediaItem = ({data, onClick}: MediaItemProps) => {
+const MediaItem = ({name, imageUrl, genres, id, onClick}: MediaItemProps) => {
 
-    const handleClick = () => {
-        if (onClick) return onClick(data.id);
+    const handleClick = (id: string) => {
+        if (onClick) return onClick(id);
 
 
         // TODO: Default turn on player
@@ -31,7 +34,7 @@ const MediaItem = ({data, onClick}: MediaItemProps) => {
 
     return (
     <div
-        onClick={handleClick}
+        // onClick={handleClick(id)}
         onContextMenu={handleRightClick}
         className="flex items-center relative gap-x-3 cusor-pointer group hover:bg-neutral-800/50 transition w-full p-2 rounded-md"
     >
@@ -40,7 +43,7 @@ const MediaItem = ({data, onClick}: MediaItemProps) => {
         >
             <Image
                 fill
-                src={data.album_cover_url || "/images/media_item_placeholder.svg"}
+                src={imageUrl || "/images/media_item_placeholder.svg"}
                 alt="media item"
                 className="object-cover"
 
@@ -52,11 +55,11 @@ const MediaItem = ({data, onClick}: MediaItemProps) => {
             className="flex flex-col gap-y-1 overflow-hidden"
         >
             <p className="text-white truncate">
-                {data.title}
+                {name}
             </p>
 
             <p className="text-neutral-400 text-sm truncate">
-                {data.artist}
+                {genres}
             </p>
         </div>
 

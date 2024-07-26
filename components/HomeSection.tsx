@@ -5,15 +5,15 @@ import { twMerge } from "tailwind-merge";
 import MediaItemCard from "./MediaItemCard";
 import { useSpotify } from "@/hooks/useSpotify";
 import { useState, useEffect } from "react";
+import { getArtistsByItem, removeQuotesFromUrl } from "@/actions/actions";
 
 
 interface HomeSectionProps {
     title: string;
-    songs: Song[];
     type: string;
 }
 
-const HomeSection = ({title, songs, type}: HomeSectionProps) => {
+const HomeSection = ({title, type}: HomeSectionProps) => {
   const { isLoggedIn } = useSpotify();
   const [newReleases, setNewReleases] = useState<any[]>([]);
 
@@ -40,14 +40,6 @@ const HomeSection = ({title, songs, type}: HomeSectionProps) => {
     fetchToken();
   }, [])
 
-  const getArtistsByItem = (data: any[]): string => {
-    return data.map((artist: any) => artist.name).join(", ");
-  }
-
-  const removeQuotesFromUrl = (url: string): string => {
-    return url.replace(/"/g, "");
-  }
-
 
   return (
     <div
@@ -64,7 +56,7 @@ const HomeSection = ({title, songs, type}: HomeSectionProps) => {
         <div
           className="mt-4"
         >
-          {songs.length === 0 ? (
+          {newReleases.length === 0 ? (
             <div className=" text-neutral-400">
                 No songs available
             </div>

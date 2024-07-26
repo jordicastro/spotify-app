@@ -1,8 +1,12 @@
 "use client";
 
+import { getGenresByItem, removeQuotesFromUrl } from "@/actions/actions";
 import MediaItem from "@/components/MediaItem";
+import { useSearch } from "@/hooks/useSearchValue";
+import { useSpotify } from "@/hooks/useSpotify";
 import { Song } from "@/types";
 import { Ellipsis, Heart } from "lucide-react";
+import { useEffect, useState } from "react";
 
 
 interface searchContentProps {
@@ -11,7 +15,25 @@ interface searchContentProps {
 
 const SearchContent = ({ songs }: searchContentProps) => {
 
-    let songDuration = "2:51";
+    const [data, setData] = useState<any[]>([]);
+
+    const { searchValue } = useSearch();
+    const { getArtistBySearchValue } = useSpotify();
+
+
+
+    useEffect( () => {
+
+        const fetchArtistBySearchValue = async (searchValue: string) => {
+            const artists: string[] = await getArtistBySearchValue(searchValue);
+            setData(artists);
+            console.log("artists", artists);
+        }
+
+        if (searchValue !== "")
+            fetchArtistBySearchValue(searchValue);
+
+    }, [searchValue])
 
     if (songs.length === 0 ) {
         return (
@@ -27,15 +49,15 @@ const SearchContent = ({ songs }: searchContentProps) => {
         <div
             className="flex flex-col gap-y-2 w-full px-6"
         >
-            {songs.map( (song) => (
+            {data.map( (item) => (
                 <div
-                    key={song.id}
+                    key={item.id}
                     className="flex items-center gap-x-4 w-full"
                 >
                     <div
                         className="flex-1"
                     >
-                        <MediaItem data={song} onClick={() => {}} />
+                        <MediaItem name={item.name} imageUrl={removeQuotesFromUrl(item.images[0].url)} genres={getGenresByItem(item.genres)} id={item.id} onClick={() => {}} />
                     </div>
 
                 </div>

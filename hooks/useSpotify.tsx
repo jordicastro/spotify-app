@@ -7,6 +7,7 @@ type SpotifyStore = {
     setAccessToken: (token: string) => void;
     fetchAccessToken: (client_id: string, client_secret: string) => Promise<string>;
     getNewReleases: (token: string) => void;
+    getArtistBySearchValue: (searchValue: string) => Promise<string[]>;
 }
 
 export const useSpotify = create<SpotifyStore>( (set, get) => ({
@@ -47,6 +48,30 @@ export const useSpotify = create<SpotifyStore>( (set, get) => ({
         console.log("data.albums.items", data.albums.items);
 
         return data.albums.items;
+
+    },
+    getArtistBySearchValue: async (searchValue) => {
+        // fetch artist ID
+        let searchParams = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + get().accessToken
+            }
+        }
+
+        const res = await fetch("https://api.spotify.com/v1/search?q=" + searchValue + "&type=artist&limit=5", searchParams);
+
+        if (!res.ok) throw new Error("Failed to fetch artist");
+
+        const data = await res.json();
+        console.log("artistId", data.artists.items);
+
+        return data.artists.items;
+
+
+
+        // use artist ID to fetch artist data
 
     }
 }))
