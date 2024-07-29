@@ -1,8 +1,8 @@
-import Box from "@/components/Box";
+
 import Header from "@/components/Header";
 import SearchInput from "@/components/SearchInput";
-import { songs } from "@/testSongs";
 import SearchContent from "./_components/SearchContent";
+import ToggleArtistOrSongSearch from "./_components/ToggleArtistOrSongSearch";
 
 
 interface SearchProps {
@@ -13,6 +13,10 @@ interface SearchProps {
 
 const Search = async ({ searchParams }: SearchProps) => {
     // const songs = await getSongsByTitle(searchParams.title);
+
+    const handleOnToggle = (isArtist: boolean) => {
+        // pass isArtist to SearchContent to determine if we are searching for an artist or a song
+    }
 
     return (
         <div
@@ -30,9 +34,10 @@ const Search = async ({ searchParams }: SearchProps) => {
                         Search
                     </h1>
                     <SearchInput />
+                    <ToggleArtistOrSongSearch />
                 </div>  
             </Header>
-            <SearchContent songs={songs}/>
+            <SearchContent />
         </div>
     )
 }

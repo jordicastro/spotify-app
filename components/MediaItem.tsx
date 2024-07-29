@@ -7,36 +7,37 @@ import Image from "next/image";
 interface MediaItemProps {
     name: string;
     imageUrl: string;
-    genres: string;
+    subtext: string;
     id: string;
     onClick: (id: string) => void;
 }
 
-const MediaItem = ({name, imageUrl, genres, id, onClick}: MediaItemProps) => {
+const MediaItem = ({name, imageUrl, subtext, id, onClick}: MediaItemProps) => {
 
-    const handleClick = (id: string) => {
+    const handleClick = () => {
         if (onClick) return onClick(id);
 
 
         // TODO: Default turn on player
-
     }
 
     const handleRightClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        event.preventDefault();
+
         console.log("Right Clicked");
-        OpenMediaItemDropdown();
+        OpenMediaItemDropdown(event);
     }
 
-    const OpenMediaItemDropdown = () => {
+    const OpenMediaItemDropdown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        e.stopPropagation();
         console.log("Open Dropdown");
     }
 
     return (
     <div
-        // onClick={handleClick(id)}
+        onClick={handleClick}
         onContextMenu={handleRightClick}
         className="flex items-center relative gap-x-3 cusor-pointer group hover:bg-neutral-800/50 transition w-full p-2 rounded-md"
+        role="button"
     >
         <div
             className="relative rounded-md min-h-[48px] min-w-[48px] overflow-hidden"
@@ -59,7 +60,7 @@ const MediaItem = ({name, imageUrl, genres, id, onClick}: MediaItemProps) => {
             </p>
 
             <p className="text-neutral-400 text-sm truncate">
-                {genres}
+                {subtext}
             </p>
         </div>
 
