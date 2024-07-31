@@ -10,6 +10,7 @@ type SpotifyStore = {
     fetchAccessToken: (client_id: string, client_secret: string) => Promise<string>;
     getNewReleases: (token: string) => void;
     getDataBySearchValue: (searchValue: string, type: dataType, limit?: number) => Promise<string[]>;
+    getArtistDataById: (id: string) => Promise<{ generalData: any; albums: any; topTracks: any }>;
 }
 
 export const useSpotify = create<SpotifyStore>( (set, get) => ({
@@ -64,7 +65,7 @@ export const useSpotify = create<SpotifyStore>( (set, get) => ({
 
         const res = await fetch("https://api.spotify.com/v1/search?q=" + searchValue + `&type=${type}&limit=${limit}`, searchParams);
 
-        if (!res.ok) throw new Error("Failed to fetch artist");
+        if (!res.ok) throw new Error(`Failed to fetch ${type} data `);
 
         const data = await res.json();
 
@@ -75,7 +76,43 @@ export const useSpotify = create<SpotifyStore>( (set, get) => ({
             console.log("data.tracks.items", data.tracks.items);
             return data.tracks.items;
         }
+    },
 
+    getArtistDataById: async (id): Promise<{ generalData: any; albums: any; topTracks: any }> => {
+        let url = "https://api.spotify.com/v1/artists/" + id;
+        let searchParams = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + get().accessToken
+            }
+        }
+        const res = await fetch(url, searchParams);
+        if (!res.ok) throw new Error("Failed to fetch artist");
 
+        const generalData = await res.json();
+        console.log("general artistData", generalData);
+
+        let url2 = "https://api.spotify.com/v1/artists/" + id + "/albums";
+        const res2 = await fetch(url2, searchParams);
+        if (!res2.ok) throw new Error("Failed to fetch artist albums");
+
+        const albumsData = await res2.json();
+        console.log("albumData", albumsData);
+
+        let url3 = "https://api.spotify.com/v1/artists/" + id + "/top-tracks?market=US";
+        const res3 = await fetch(url3, searchParams);
+        if (!res3.ok) throw new Error("Failed to fetch artist top tracks");
+
+        const topTracksData = await res3.json();
+        console.log("topTracksData", topTracksData);
+
+        const albums = albumsData.items;
+        const topTracks = topTracksData.tracks;
+
+        console.log("topTracks.tracks", topTracks);
+        console.log("albums.items", albums);
+
+        return { generalData, albums, topTracks };
     }
 }))

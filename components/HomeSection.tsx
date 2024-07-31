@@ -14,31 +14,21 @@ interface HomeSectionProps {
 }
 
 const HomeSection = ({title, type}: HomeSectionProps) => {
-  const { isLoggedIn } = useSpotify();
+  const { isLoggedIn, accessToken } = useSpotify();
   const [newReleases, setNewReleases] = useState<any[]>([]);
 
   const spotify = useSpotify();
-  // REPLACE WITH process.env.NEXT_PUBLIC_CLIENT_ID and process.env.NEXT_PUBLIC_CLIENT_SECRET before deploying
-  const CLIENT_ID = ""
-  const CLIENT_SECRET = "";
-  if (!CLIENT_ID || !CLIENT_SECRET) {
-    throw new Error("CLIENT_ID or CLIENT_SECRET is undefined");
-  }
 
   useEffect( () => {
-    const fetchToken = async () => {
-      const token: string = await spotify.fetchAccessToken(CLIENT_ID, CLIENT_SECRET);
-      console.log("token", token);
-      fetchNewReleases(token);
-    }
 
     const fetchNewReleases = async (token: string) => {
       const data: any = await spotify.getNewReleases(token);
       setNewReleases(data);
     }
 
-    fetchToken();
-  }, [])
+    if (accessToken !== "")
+      fetchNewReleases(accessToken);
+  }, [accessToken, spotify])
 
 
   return (
@@ -69,24 +59,16 @@ const HomeSection = ({title, type}: HomeSectionProps) => {
                     type === "grid" && "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-8 gap-4 mt-4"
                 )}
             >
-                {/* {title !== "New Releases" && songs.map( (song) => (
-                    <MediaItemCard
-                        key={song.id}
-                        onClick={() => {}}
-                        data={song}
-                    />
-                ))} */}
 
                 {title === "New Releases" && newReleases.map( (item) => (
                   <MediaItemCard
                     key={item.id}
-                    artists={getArtistsByItem(item.artists)}
+                    subtext={getArtistsByItem(item.artists)}
                     albumType={item.album_type}
                     onClick={() => {}}
                     itemImageUrl={removeQuotesFromUrl(item.images[2].url)}
                     itemName={item.name}
-                  >
-                  </MediaItemCard>
+                  />
                 ))}
             </div>
           )}

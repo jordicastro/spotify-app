@@ -1,6 +1,7 @@
 import Button from "@/components/Button";
 import Header from "@/components/Header";
 import HomeSection from "@/components/HomeSection";
+import PlayButton from "@/components/PlayButton";
 import PlaylistItem from "@/components/PlaylistItem";
 import { songs } from "@/testSongs";
 

@@ -1,22 +1,22 @@
 "use client";
 
-import { MediaItem, Song } from "@/types";
-import { Play } from "lucide-react";
 import Image from "next/image";
 import PlayButton from "./PlayButton";
 
 interface MediaItemCardProps {
     albumType: "album" | "single";
-    artists: string;
+    subtext: string;
     itemImageUrl: string;
     itemName: string;
-    onClick: (id: string) => void;
+    id?: string;
+    onClick: (id: string | undefined) => void;
 }
 
-const MediaItemCard = ({ albumType, artists, itemImageUrl,itemName, onClick }: MediaItemCardProps) => {
+const MediaItemCard = ({ albumType, subtext, itemImageUrl,itemName, id, onClick }: MediaItemCardProps) => {
   return (
     <div
         className="relative group flex flex-col justify-center items-center rounded-md overflow-hidden gap-x-4 p-3 bg-neutral-400/5 cursor-pointer hover:bg-neutral-400/10 transition"
+        onClick={() => onClick(id)}
     >
         <div
             className="relative aspect-square w-full h-wull rounded-md overflow-hidden"
@@ -36,7 +36,7 @@ const MediaItemCard = ({ albumType, artists, itemImageUrl,itemName, onClick }: M
                 {itemName}
             </p>
             <p className="text-neutral-400 text-sm pb-4 w-full truncate">
-                {artists}
+                {subtext}
             </p>
         </div>
 

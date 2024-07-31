@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Play } from "lucide-react";
 import PlayButton from "./PlayButton";
 
 interface PlaylistItemProps {

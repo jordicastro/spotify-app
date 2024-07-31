@@ -2,19 +2,35 @@
 
 import ArtistContent from '@/components/ArtistContent';
 import Header from '@/components/Header';
+import { useSpotify } from '@/hooks/useSpotify';
+import { useTwitter } from '@/hooks/useTwitter';
 import { useParams } from 'next/navigation';
-import React, { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import FunctionButtons from './_components/FunctionButtons';
+import DataSection from './_components/DataSection';
 
 const ArtistPage = () => {
 
     const { artistId } = useParams();
+    const artistIdString = Array.isArray(artistId) ? artistId[0] : artistId;
+
+    const { getArtistDataById } = useSpotify();
+    const [generalData, setGeneralData] = useState<any>({});
+    const [albums, setAlbums] = useState<any>({});
+    const [topTracks, setTopTracks] = useState<any>([]);
+    const { getUserData } = useTwitter();
 
     useEffect( () => {
-        // TODO: fetch artist data using artistId
-        // fetch top artist songs limit=5
-        // fetch top artist albums limit=5
-        // pass them into the ArtistContent component for styling
-    }, [artistId])
+        const fetchArtistData = async () => {
+            const { generalData, albums, topTracks } = await getArtistDataById(artistIdString);
+            setGeneralData(generalData);
+            setAlbums(albums);
+            setTopTracks(topTracks);
+            //getUserData(generalData.name);
+        }
+
+        fetchArtistData();
+    }, [])
 
     return (
     <div
@@ -22,9 +38,16 @@ const ArtistPage = () => {
     >
         <Header
             className="from-bg-neutral-900"
+            // twitterBanner={}
         >
-            <ArtistContent artistData={""} artistAlbums={""} artistSongs={""} />
+            <ArtistContent  generalData={generalData} />
         </Header>
+
+        <div className='pl-6'>
+            <FunctionButtons />
+            <DataSection title="Top tracks" data={topTracks} />
+            <DataSection title="Discography" data={albums} />
+        </div>
     </div>
     )
 }
