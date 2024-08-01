@@ -10,15 +10,17 @@ import { twMerge } from "tailwind-merge";
 
 
 interface DataSectionProps {
-  title: string;
+  title?: string;
   data: any;
+  isAlbum?: boolean
+  albumImageUrl?: string;
 }
 
 const onClick = (id: string) => {
   // TODO:
 }
 
-const DataSection = ({ title, data }: DataSectionProps) => {
+const DataSection = ({ title, data, isAlbum, albumImageUrl}: DataSectionProps) => {
   const router = useRouter();
 
   const [isAlbums, setIsAlbums] = useState(true);
@@ -41,12 +43,14 @@ const DataSection = ({ title, data }: DataSectionProps) => {
 
   return (
     <div
-        className="flex flex-col items-start justiify-start gap-y-6 mb-16"
+        className="flex flex-col items-start justiify-start gap-y-6 mb-16 mt-6"
     >
 
-        <h1 className="text-4xl font-white font-semibold">
-            {title}
-        </h1>
+        {title && (
+          <h1 className="text-4xl font-white font-semibold pt-16">
+              {title}
+          </h1>
+        )}
 
         {title === "Discography" && (
               <div
@@ -121,6 +125,21 @@ const DataSection = ({ title, data }: DataSectionProps) => {
 
             )}
         </div>
+
+        {isAlbum &&dataArray.map( (item: any, index: number) => (
+              <div
+                key={item.id}
+                className="flex items-center gap-x-4 w-full"
+              >
+                <div className="flex-1">
+                    <MediaItem name={item.name} imageUrl={albumImageUrl} subtext={getArtistsByItem(item.artists)} id={item.id} enumerate index={index} duration={convertMStoMinutes(item.duration_ms)} onClick={onSongClick} />
+                    {/* imageUrl={albumImageUrl as string} */}
+                </div>
+
+              </div>
+
+            ))
+        }
 
     </div>
   )

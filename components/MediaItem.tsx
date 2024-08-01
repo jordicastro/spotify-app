@@ -2,6 +2,8 @@
 
 import { Ellipsis, Play } from "lucide-react";
 import Image from "next/image";
+import { useRef } from "react";
+import { twMerge } from "tailwind-merge";
 
 
 interface albumData {
@@ -13,8 +15,9 @@ interface songData {
 }
 interface MediaItemProps {
     name: string;
-    imageUrl: string;
+    imageUrl?: string;
     subtext: string;
+    subtextIsArtists?: boolean;
     id: string;
     enumerate?: boolean;
     index?: number;
@@ -23,7 +26,9 @@ interface MediaItemProps {
     onClick: (id: string) => void;
 }
 
-const MediaItem = ({name, imageUrl, subtext, id, enumerate, index, duration, onClick}: MediaItemProps) => {
+const MediaItem = ({name, imageUrl, subtext, subtextIsArtists, id, enumerate, index, duration, onClick}: MediaItemProps) => {
+    const imageRef = useRef<HTMLDivElement>(null);
+
 
     const handleClick = () => {
         if (onClick) return onClick(id);
@@ -34,6 +39,9 @@ const MediaItem = ({name, imageUrl, subtext, id, enumerate, index, duration, onC
 
     const handleRightClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
 
+        if (imageRef.current && imageRef.current.contains(event.target as Node)) return;
+
+        event.preventDefault();
         console.log("Right Clicked");
         OpenMediaItemDropdown(event);
     }
@@ -67,15 +75,17 @@ const MediaItem = ({name, imageUrl, subtext, id, enumerate, index, duration, onC
         <div
             className="relative rounded-md min-h-[48px] min-w-[48px] overflow-hidden"
         >
+            { !!imageUrl && (
+
             <Image
+                ref={imageRef}
                 fill
                 sizes="48px"
                 src={imageUrl || "/images/media_item_placeholder.svg"}
                 alt="media item"
                 className="object-cover"
-
-
             />
+            )}
         </div>
         <div
             className="flex flex-col gap-y-1 overflow-hidden w-full"
@@ -84,7 +94,10 @@ const MediaItem = ({name, imageUrl, subtext, id, enumerate, index, duration, onC
                 {name}
             </p>
 
-            <p className="text-neutral-400 text-sm w-full truncate">
+            <p className={twMerge(
+                    `text-neutral-400 text-sm w-full truncate`,
+                    subtextIsArtists && "hover:underline underline-offset-2"
+                )}>
                 {subtext}
             </p>
         </div>

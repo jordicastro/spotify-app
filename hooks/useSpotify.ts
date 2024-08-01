@@ -11,6 +11,7 @@ type SpotifyStore = {
     getNewReleases: (token: string) => void;
     getDataBySearchValue: (searchValue: string, type: dataType, limit?: number) => Promise<string[]>;
     getArtistDataById: (id: string) => Promise<{ generalData: any; albums: any; topTracks: any }>;
+    getAlbumDataById: (id: string) => Promise<{ generalData: any; tracks: any}>;
 }
 
 export const useSpotify = create<SpotifyStore>( (set, get) => ({
@@ -99,7 +100,6 @@ export const useSpotify = create<SpotifyStore>( (set, get) => ({
 
         const albumsData = await res2.json();
         console.log("albumData", albumsData);
-
         let url3 = "https://api.spotify.com/v1/artists/" + id + "/top-tracks?market=US";
         const res3 = await fetch(url3, searchParams);
         if (!res3.ok) throw new Error("Failed to fetch artist top tracks");
@@ -114,5 +114,25 @@ export const useSpotify = create<SpotifyStore>( (set, get) => ({
         console.log("albums.items", albums);
 
         return { generalData, albums, topTracks };
+    },
+
+    getAlbumDataById: async (id): Promise<{ generalData: any; tracks: any }> => {
+        let url = "https://api.spotify.com/v1/albums/" + id;
+        let searchParams = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + get().accessToken
+            }
+        };
+        const res = await fetch(url, searchParams);
+        if (!res.ok) throw new Error("Failed to fetch album");
+
+        const AlbumData = await res.json();
+        console.log("albumData", AlbumData);
+        console.log("albumData.tracks.items", AlbumData.tracks.items);
+
+
+        return { generalData: AlbumData, tracks: AlbumData.tracks.items };
     }
 }))

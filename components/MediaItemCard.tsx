@@ -12,7 +12,7 @@ interface MediaItemCardProps {
     onClick: (id: string | undefined) => void;
 }
 
-const MediaItemCard = ({ albumType, subtext, itemImageUrl,itemName, id, onClick }: MediaItemCardProps) => {
+const MediaItemCard = ({ albumType, subtext, itemImageUrl, itemName, id, onClick }: MediaItemCardProps) => {
   return (
     <div
         className="relative group flex flex-col justify-center items-center rounded-md overflow-hidden gap-x-4 p-3 bg-neutral-400/5 cursor-pointer hover:bg-neutral-400/10 transition"

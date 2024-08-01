@@ -95,7 +95,7 @@ const SearchContent = ({  }: searchContentProps) => {
                         <div
                             className="flex-1"
                         >
-                            <MediaItem name={item.name} imageUrl={removeQuotesFromUrl(item.album.images[0].url)} subtext={getArtistsByItem(item.artists)} id={item.id} onClick={onRedirectToArtistPage} />
+                            <MediaItem name={item.name} imageUrl={removeQuotesFromUrl(item.album.images[0].url)} subtext={getArtistsByItem(item.artists)} subtextIsArtists id={item.id} onClick={onRedirectToArtistPage} />
                         </div>
                     </div>
                 )

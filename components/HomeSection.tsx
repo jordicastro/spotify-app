@@ -6,6 +6,8 @@ import MediaItemCard from "./MediaItemCard";
 import { useSpotify } from "@/hooks/useSpotify";
 import { useState, useEffect } from "react";
 import { getArtistsByItem, removeQuotesFromUrl } from "@/actions/actions";
+import { on } from "events";
+import { useRouter } from "next/navigation";
 
 
 interface HomeSectionProps {
@@ -16,6 +18,7 @@ interface HomeSectionProps {
 const HomeSection = ({title, type}: HomeSectionProps) => {
   const { isLoggedIn, accessToken } = useSpotify();
   const [newReleases, setNewReleases] = useState<any[]>([]);
+  const router = useRouter();
 
   const spotify = useSpotify();
 
@@ -29,6 +32,10 @@ const HomeSection = ({title, type}: HomeSectionProps) => {
     if (accessToken !== "")
       fetchNewReleases(accessToken);
   }, [accessToken, spotify])
+
+  const onRedirectAlbumPage = (id: string) => {
+    router.push(`/album/${id}`);
+  }
 
 
   return (
@@ -65,7 +72,7 @@ const HomeSection = ({title, type}: HomeSectionProps) => {
                     key={item.id}
                     subtext={getArtistsByItem(item.artists)}
                     albumType={item.album_type}
-                    onClick={() => {}}
+                    onClick={() => onRedirectAlbumPage(item.id)}
                     itemImageUrl={removeQuotesFromUrl(item.images[2].url)}
                     itemName={item.name}
                   />
