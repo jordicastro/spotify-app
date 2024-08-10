@@ -8,8 +8,8 @@ const TokenProvider = () => {
   const spotify = useSpotify();
   const router = useRouter();
 
-  const CLIENT_ID = "99650d96c556427f86e309ff37ec9926";
-  const CLIENT_SECRET = "478845abdde340f08c4906cafda05770";
+  const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID;
+  const CLIENT_SECRET = process.env.NEXT_PUBLIC_CLIENT_SECRET;
 
   if (!CLIENT_ID || !CLIENT_SECRET) {
     throw new Error("CLIENT_ID or CLIENT_SECRET is undefined");

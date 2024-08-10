@@ -123,6 +123,7 @@ const DataSection = ({ title, data, isAlbum, albumImageUrl}: DataSectionProps) =
                     itemName={item.name}
                     itemImageUrl={removeQuotesFromUrl(item.images[0].url)}
                     albumType={item.album_type}
+                    artists={item.artists}
                     id={item.id}
                     onClick={() => onRedirectAlbumPage(item.id)}
                   />
