@@ -1,5 +1,7 @@
 "use client";
 
+import { getThemeClass } from "@/actions/actions";
+import { useSettings } from "@/hooks/useSettings";
 import { Heart, LucideIcon } from "lucide-react";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
@@ -15,6 +17,7 @@ interface LikeButtonProps {
 const LikeButton = ({size, children, icon: InactiveIcon, activeIcon: ActiveIcon, onClick}: LikeButtonProps) => {
 
     const [isActive, setIsActive] = useState(false);
+    const { currentTheme } = useSettings();
 
     const Icon: LucideIcon = isActive && ActiveIcon ? ActiveIcon : InactiveIcon;
 
@@ -35,7 +38,7 @@ const LikeButton = ({size, children, icon: InactiveIcon, activeIcon: ActiveIcon,
                     size === "sm" && `w-6 h-6`,
                     size === "md" && `w-8 h-8`,
                     size === "lg" && `w-12 h-12`,
-                    isActive && `bg-indigo-500 text-white p-2 transition`
+                    isActive && getThemeClass("background", currentTheme, "500") + ` text-white p-2 transition`
                 )} 
             />
         </div>

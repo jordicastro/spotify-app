@@ -71,6 +71,8 @@ const HomeSection = ({title, type}: HomeSectionProps) => {
                   <MediaItemCard
                     key={item.id}
                     subtext={getArtistsByItem(item.artists)}
+                    subtextIsArtists
+                    artists={item.artists}
                     albumType={item.album_type}
                     onClick={() => onRedirectAlbumPage(item.id)}
                     itemImageUrl={removeQuotesFromUrl(item.images[2].url)}

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import AlbumContent from "./_components/AlbumContent";
 import FunctionButtons from "../../artist/[artistId]/_components/FunctionButtons";
 import DataSection from "../../artist/[artistId]/_components/DataSection";
+import { getDominantColor } from "@/utils/getDominantColor";
 
 
 const AlbumPage = () => {
@@ -27,7 +28,9 @@ const AlbumPage = () => {
             const artistId = generalData.artists[0].id;
             const { generalData: artistData } = await getArtistDataById(artistId);
             setArtistData(artistData);
-            setAlbumImageUrl(generalData?.images?.[0]?.url )
+            setAlbumImageUrl(generalData?.images?.[0]?.url)
+            // const hex = getDominantColor(albumImageUrl);
+            // console.log("hex", hex);
 
         }
 

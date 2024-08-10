@@ -38,7 +38,8 @@ const ArtistPage = () => {
     >
         <Header
             className="from-bg-neutral-900"
-            // twitterBanner={}
+            twitterBannerUrl={""}
+            isArtistPage
         >
             <ArtistContent  generalData={generalData} />
         </Header>

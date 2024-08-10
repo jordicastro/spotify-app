@@ -7,6 +7,13 @@ const nextConfig = {
                 hostname: "i.scdn.co",
                 port: "",
                 pathname: "/image/**",
+            },
+            {
+                protocol: 'https',
+                hostname: "avatars.githubusercontent.com",
+                port: "",
+                pathname: "/u/**",
+
             }
         ]
     }

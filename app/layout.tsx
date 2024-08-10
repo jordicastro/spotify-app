@@ -3,6 +3,7 @@ import { Figtree } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
 import TokenProvider from "@/providers/TokenProvider";
+import { ModalProvider } from "@/providers/ModalProvider";
 
 const font = Figtree({ subsets: ["latin"] });
 
@@ -34,6 +35,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={font.className}>
         <TokenProvider />
+        <ModalProvider />
         <Sidebar>
           {children}
         </Sidebar>

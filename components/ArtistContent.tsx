@@ -2,6 +2,7 @@
 
 import { removeQuotesFromUrl } from "@/actions/actions";
 import { useSpotify } from "@/hooks/useSpotify";
+import { useViewImage } from "@/hooks/useViewImage";
 import { BadgeCheck } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -15,21 +16,28 @@ const ArtistContent = ({ generalData }: ArtistContentProps) => {
   const imageUrl = !!generalData.images && generalData.images[0].url || "/images/media_item_placeholder.svg";
   const artistName = generalData.name;
   const numFollowers: number = generalData.followers?.total || 0;
-
   const isVerified = numFollowers > 1000000;
-
   const formattedNumFollowers = numFollowers.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+  const viewImage = useViewImage();
+
+  const handleOpenViewImageModal = () => {
+    viewImage.setImageUrl(imageUrl);
+    viewImage.onOpen();
+  }
 
   return (
     <div
-      className="flex flex-col items-start justify-start gap-y-6 h-full w-full mt-6"
+      className="flex flex-col items-start justify-start gap-y-6 h-full w-full mt-6 z-[2]"
     >
 
       <div
         className="flex items-baseline justify-start gap-x-6 h-full w-full"
       >
         <div
-            className="relative rounded-md min-h-[144px] min-w-[144px] overflow-hidden"
+            className="relative rounded-xl min-h-[144px] min-w-[144px] overflow-hidden hover:scale-105 transition active:scale-100"
+            role="button"
+            onClick={() => handleOpenViewImageModal()}
         >
             <Image
                 fill

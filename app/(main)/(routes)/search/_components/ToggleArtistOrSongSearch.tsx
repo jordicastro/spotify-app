@@ -1,6 +1,8 @@
 "use client";
 
+import { getThemeClass } from "@/actions/actions";
 import { useSearchType } from "@/hooks/useSearchType";
+import { useSettings } from "@/hooks/useSettings";
 import { CircleUserRound, Music } from "lucide-react";
 import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
@@ -9,7 +11,7 @@ import { twMerge } from "tailwind-merge";
 const ToggleArtistOrSongSearch = () => {
 
     const { isArtist, setIsArtist } = useSearchType();
-
+    const { currentTheme } = useSettings();
 
     return (
     <div
@@ -21,7 +23,7 @@ const ToggleArtistOrSongSearch = () => {
             onClick={() => setIsArtist(true)}
         >
             <CircleUserRound className={twMerge(`w-6 h-6 text-neutral-400 hover:scale-110 transition`,
-                isArtist ? "text-indigo-800" : "text-neutral-400"
+                isArtist ? getThemeClass("text", currentTheme, "500") : "text-neutral-400"
             )} />
         </div>
 
@@ -34,7 +36,7 @@ const ToggleArtistOrSongSearch = () => {
             onClick={() => setIsArtist(false)}
         >
             <Music className={twMerge(`w-6 h-6 text-neutral-400 hover:scale-110 transition`,
-                isArtist ? "text-neutral-400" : "text-indigo-800"
+                isArtist ? "text-neutral-400" : getThemeClass("text", currentTheme, "500")
             )} />
         </div>
     </div>

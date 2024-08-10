@@ -2,32 +2,33 @@
 
 import { Ellipsis, Play } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useRef } from "react";
 import { twMerge } from "tailwind-merge";
+import ItemMenu from "./ItemMenu";
 
-
-interface albumData {
-
-}
-
-interface songData {
-
+interface Artist {
+    name: string;
+    id: string;
 }
 interface MediaItemProps {
     name: string;
     imageUrl?: string;
     subtext: string;
+    artists?: Artist[];
     subtextIsArtists?: boolean;
     id: string;
+    artistId?: string;
+    albumId?: string
     enumerate?: boolean;
     index?: number;
-    data?: albumData | songData;
     duration?: string;
     onClick: (id: string) => void;
 }
 
-const MediaItem = ({name, imageUrl, subtext, subtextIsArtists, id, enumerate, index, duration, onClick}: MediaItemProps) => {
+const MediaItem = ({name, imageUrl, subtext, subtextIsArtists, artists, id, artistId, albumId, enumerate, index, duration, onClick}: MediaItemProps) => {
     const imageRef = useRef<HTMLDivElement>(null);
+    const router = useRouter();
 
 
     const handleClick = () => {
@@ -73,7 +74,7 @@ const MediaItem = ({name, imageUrl, subtext, subtextIsArtists, id, enumerate, in
         )}
 
         <div
-            className="relative rounded-md min-h-[48px] min-w-[48px] overflow-hidden"
+            className="relative rounded-[5px] min-h-[48px] min-w-[48px] overflow-hidden"
         >
             { !!imageUrl && (
 
@@ -90,27 +91,31 @@ const MediaItem = ({name, imageUrl, subtext, subtextIsArtists, id, enumerate, in
         <div
             className="flex flex-col gap-y-1 overflow-hidden w-full"
         >
-            <p className="text-white w-full truncate">
+            <p className="text-white w-[275px] sm:w-auto md:w-[280px] lg:w-auto line-clamp-1">
                 {name}
             </p>
 
             <p className={twMerge(
                     `text-neutral-400 text-sm w-full truncate`,
-                    subtextIsArtists && "hover:underline underline-offset-2"
                 )}>
-                {subtext}
+                {subtextIsArtists && artists ? (
+            artists.map((artist, id) => (
+                <span
+                    key={id}
+                    className="hover:underline cursor-pointer"
+                    onClick={() => router.push(`/artist/${artist.id}`)}
+                >
+                    {artist.name}
+                    {id < artists.length - 1 && ", "}
+                </span>
+                ))
+            ) : (
+                subtext
+            )}
             </p>
         </div>
 
-        <div
-            className="absolute right-2"
-            role="button"
-            onClick={OpenMediaItemDropdown}
-        >
-            <Ellipsis
-                className="hidden group-hover:flex transition ease-in-out text-neutral-400 hover:scale-105 p-1 bg-transparent hover:bg-white/10 rounded-full cursor-pointer "
-            />
-        </div>
+        <ItemMenu onClick={OpenMediaItemDropdown} artistId={artistId as string} albumId={albumId as string} />
 
         <div
             className="absolute right-14 text-xs text-neutral-400"

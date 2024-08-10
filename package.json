@@ -9,18 +9,25 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.1",
+    "@radix-ui/react-dropdown-menu": "^2.1.1",
+    "@radix-ui/react-scroll-area": "^1.1.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
     "lucide-react": "^0.414.0",
     "next": "14.2.5",
     "query-string": "^9.1.0",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.4.0",
+    "tailwindcss-animate": "^1.0.7",
     "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "colorthief": "^2.4.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "postcss": "^8",

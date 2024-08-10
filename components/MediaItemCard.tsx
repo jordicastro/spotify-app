@@ -2,24 +2,38 @@
 
 import Image from "next/image";
 import PlayButton from "./PlayButton";
+import { useRouter } from "next/navigation";
 
+interface Artist {
+    name: string;
+    id: string;
+}
 interface MediaItemCardProps {
     albumType: "album" | "single";
     subtext: string;
+    subtextIsArtists?: boolean;
+    artists: Artist[];
     itemImageUrl: string;
     itemName: string;
     id?: string;
     onClick: (id: string | undefined) => void;
 }
 
-const MediaItemCard = ({ albumType, subtext, itemImageUrl, itemName, id, onClick }: MediaItemCardProps) => {
+const MediaItemCard = ({ albumType, subtext, subtextIsArtists, artists, itemImageUrl, itemName, id, onClick }: MediaItemCardProps) => {
+    const router = useRouter();
+
+    const handleReroute = (path: string, e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+        e.stopPropagation();
+        router.push(path);
+    }
+
   return (
     <div
-        className="relative group flex flex-col justify-center items-center rounded-md overflow-hidden gap-x-4 p-3 bg-neutral-400/5 cursor-pointer hover:bg-neutral-400/10 transition"
+        className="relative group flex flex-col justify-center items-center rounded-xl overflow-hidden gap-x-4 p-3 bg-neutral-400/5 cursor-pointer hover:bg-neutral-400/10 transition"
         onClick={() => onClick(id)}
     >
         <div
-            className="relative aspect-square w-full h-wull rounded-md overflow-hidden"
+            className="relative aspect-square w-full h-full rounded-[10px] overflow-hidden"
         >
             <Image
                 className="object-cover"
@@ -36,7 +50,20 @@ const MediaItemCard = ({ albumType, subtext, itemImageUrl, itemName, id, onClick
                 {itemName}
             </p>
             <p className="text-neutral-400 text-sm pb-4 w-full truncate">
-                {subtext}
+            {subtextIsArtists && artists ? (
+            artists.map((artist, id) => (
+                <span
+                    key={id}
+                    className="hover:underline cursor-pointer"
+                    onClick={(e) => handleReroute(`/artist/${artist.id}`, e)}
+                >
+                    {artist.name}
+                    {id < artists.length - 1 && ", "}
+                </span>
+                ))
+            ) : (
+                subtext
+            )}
             </p>
         </div>
 

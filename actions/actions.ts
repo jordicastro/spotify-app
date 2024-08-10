@@ -37,3 +37,66 @@ export const getAlbumDuration = (data: any[]): string => {
 
     return convertMStoMinutes(totalDuration, false);
 }
+
+export const getThemeClass = (
+    type: "background" | "gradient" | "text" | "border" = "background",
+    theme: string, weight: string = "500"
+) => {
+    if (type === "background" ) {
+        switch (theme) {
+            case "indigo":
+                return `bg-indigo-${weight}`;
+            case "red":
+                return `bg-red-${weight}`;
+            case "green":
+                return `bg-green-${weight}`;
+            case "blue":
+                return `bg-blue-${weight}`;
+            // Add more cases as needed
+            default:
+                return "bg-indigo-500";
+        }
+    } else if (type === "gradient" && weight) {
+        switch (theme) {
+            case "indigo":
+                return `bg-gradient-to-b from-indigo-${weight}`;
+            case "red":
+                return `bg-gradient-to-b from-red-${weight}`;
+            case "green":
+                return `bg-gradient-to-b from-green-${weight}`;
+            case "blue":
+                return `bg-gradient-to-b from-blue-${weight}`;
+            default:
+                return "bg-gradient-to-b from-indigo-500";
+        }
+    } else if (type === "border" && weight) {
+        switch (theme) {
+            case "indigo":
+                return `border-indigo-${weight}`;
+            case "red":
+                return `border-red-${weight}`;
+            case "green":
+                return `border-green-${weight}`;
+            case "blue":
+                return `border-blue-${weight}`;
+            // Add more cases as needed
+            default:
+                return "";
+        }
+    } else if (type === "text" ) {
+        switch (theme) {
+            case "indigo":
+                return `text-indigo-${weight}`;
+            case "red":
+                return `text-red-${weight}`;
+            case "green":
+                return `text-green-${weight}`;
+            case "blue":
+                return `text-blue-${weight}`;
+            // Add more cases as needed
+            default:
+                return "";
+        }
+    }
+    return "border border-slate-500"
+};

@@ -1,10 +1,11 @@
 "use client";
 
-import { convertMStoMinutes, getArtistsByItem, getYearFromReleaseDate, removeQuotesFromUrl } from "@/actions/actions";
+import { convertMStoMinutes, getArtistsByItem, getThemeClass, getYearFromReleaseDate, removeQuotesFromUrl } from "@/actions/actions";
 import Button from "@/components/Button";
 import MediaItem from "@/components/MediaItem";
 import MediaItemCard from "@/components/MediaItemCard";
-import { useRouter } from "next/navigation";
+import { useSettings } from "@/hooks/useSettings";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -22,9 +23,11 @@ const onClick = (id: string) => {
 
 const DataSection = ({ title, data, isAlbum, albumImageUrl}: DataSectionProps) => {
   const router = useRouter();
+  const { albumId } = useParams();
 
   const [isAlbums, setIsAlbums] = useState(true);
   const [isExpanded, setExpanded] = useState(false);
+  const { currentTheme } = useSettings();
 
   const expandText = isExpanded ? "see less" : "see more";
   const dataArray = Array.isArray(data) ? data : [];
@@ -43,7 +46,10 @@ const DataSection = ({ title, data, isAlbum, albumImageUrl}: DataSectionProps) =
 
   return (
     <div
-        className="flex flex-col items-start justiify-start gap-y-6 mb-16 mt-6"
+        className={twMerge(
+          `flex flex-col items-start justiify-start gap-y-6 mb-16 mt-6`,
+          !isAlbum && `mt-0`
+        )}
     >
 
         {title && (
@@ -59,7 +65,7 @@ const DataSection = ({ title, data, isAlbum, albumImageUrl}: DataSectionProps) =
                 <Button
                   className={twMerge(
                     `w-24 h-10 bg-neutral-700 text-neutral-300`,
-                    isAlbums && `bg-indigo-500 text-black`
+                    isAlbums && getThemeClass("background", currentTheme, "500") + " text-black"
                   )}
                   onClick={() => setIsAlbums(true)}
                 >
@@ -69,7 +75,7 @@ const DataSection = ({ title, data, isAlbum, albumImageUrl}: DataSectionProps) =
                 <Button
                   className={twMerge(
                     `w-24 h-10 bg-neutral-700 text-neutral-300`,
-                    !isAlbums && `bg-indigo-500 text-black`
+                    !isAlbums && getThemeClass("background", currentTheme, "500") + " text-black"
                   )}
                   onClick={() => setIsAlbums(false)}
                 >
@@ -87,7 +93,7 @@ const DataSection = ({ title, data, isAlbum, albumImageUrl}: DataSectionProps) =
                 className="flex items-center gap-x-4 w-full"
               >
                 <div className="flex-1">
-                    <MediaItem name={item.name} imageUrl={removeQuotesFromUrl(item.album.images[0].url)} subtext={getArtistsByItem(item.artists)} id={item.id} enumerate index={index} duration={convertMStoMinutes(item.duration_ms)} onClick={onSongClick} />
+                    <MediaItem name={item.name} imageUrl={removeQuotesFromUrl(item.album.images[0].url)} artists={item.artists} subtextIsArtists subtext="" id={item.id} artistId={item.artists[0].id} albumId={item.album.id} enumerate index={index} duration={convertMStoMinutes(item.duration_ms)} onClick={onSongClick} />
                 </div>
 
               </div>
@@ -126,13 +132,13 @@ const DataSection = ({ title, data, isAlbum, albumImageUrl}: DataSectionProps) =
             )}
         </div>
 
-        {isAlbum &&dataArray.map( (item: any, index: number) => (
+        {isAlbum && dataArray.map( (item: any, index: number) => (
               <div
                 key={item.id}
                 className="flex items-center gap-x-4 w-full"
               >
                 <div className="flex-1">
-                    <MediaItem name={item.name} imageUrl={albumImageUrl} subtext={getArtistsByItem(item.artists)} id={item.id} enumerate index={index} duration={convertMStoMinutes(item.duration_ms)} onClick={onSongClick} />
+                    <MediaItem name={item.name} imageUrl={albumImageUrl} subtext="" subtextIsArtists artists={item.artists} id={item.id} artistId={item.artists[0].id} albumId={albumId as string} enumerate index={index} duration={convertMStoMinutes(item.duration_ms)} onClick={onSongClick} />
                     {/* imageUrl={albumImageUrl as string} */}
                 </div>
 

@@ -12,6 +12,7 @@ type SpotifyStore = {
     getDataBySearchValue: (searchValue: string, type: dataType, limit?: number) => Promise<string[]>;
     getArtistDataById: (id: string) => Promise<{ generalData: any; albums: any; topTracks: any }>;
     getAlbumDataById: (id: string) => Promise<{ generalData: any; tracks: any}>;
+    handleLogin: () => void;
 }
 
 export const useSpotify = create<SpotifyStore>( (set, get) => ({
@@ -134,5 +135,10 @@ export const useSpotify = create<SpotifyStore>( (set, get) => ({
 
 
         return { generalData: AlbumData, tracks: AlbumData.tracks.items };
+    },
+
+    handleLogin: async () => {
+        const params = {};
+        return;
     }
 }))

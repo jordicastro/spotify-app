@@ -28,6 +28,10 @@ const SearchContent = ({  }: searchContentProps) => {
 
     const router = useRouter();
 
+    const onHandlePlay = (id: string) => {
+        console.log("Playing song", id);
+    }
+
 
 
     useEffect( () => {
@@ -95,7 +99,7 @@ const SearchContent = ({  }: searchContentProps) => {
                         <div
                             className="flex-1"
                         >
-                            <MediaItem name={item.name} imageUrl={removeQuotesFromUrl(item.album.images[0].url)} subtext={getArtistsByItem(item.artists)} subtextIsArtists id={item.id} onClick={onRedirectToArtistPage} />
+                            <MediaItem name={item.name} imageUrl={removeQuotesFromUrl(item.album.images[0].url)} subtext="" subtextIsArtists artists={item.artists} id={item.id} artistId={item.artists[0].id} albumId={item.album.id} onClick={onHandlePlay} />
                         </div>
                     </div>
                 )
