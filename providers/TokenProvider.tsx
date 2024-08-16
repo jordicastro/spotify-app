@@ -10,6 +10,8 @@ const TokenProvider = () => {
 
   const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID;
   const CLIENT_SECRET = process.env.NEXT_PUBLIC_CLIENT_SECRET;
+  // const CLIENT_ID = "";
+  // const CLIENT_SECRET = ""
 
   if (!CLIENT_ID || !CLIENT_SECRET) {
     throw new Error("CLIENT_ID or CLIENT_SECRET is undefined");

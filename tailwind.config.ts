@@ -92,6 +92,15 @@ const config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "pulse-fast": "pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+      },
+      animationDelay: {
+        '05': '0.05s',
+        '10': '0.1s',
+        '15': '0.15s',
+        '20': '0.2s',
+        '25': '0.25s',
+        '30': '0.3s',
       },
     },
   },

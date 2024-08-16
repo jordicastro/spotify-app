@@ -3,6 +3,7 @@
 import { getThemeClass } from "@/actions/actions";
 import Button from "@/components/Button"
 import FunctionButton from "@/components/FunctionButton";
+import MediaPageMenu from "@/components/MediaPageMenu";
 import PlayButton from "@/components/PlayButton"
 import { useSettings } from "@/hooks/useSettings";
 import { Check, Ellipsis, Heart, Play, PlusCircle, Shuffle } from "lucide-react"
@@ -12,9 +13,10 @@ import { twMerge } from "tailwind-merge";
 
 interface FunctionButtonsProps {
     isAlbum?: boolean;
+    spotifyHref?: string;
 }
 
-const FunctionButtons = ({isAlbum}: FunctionButtonsProps) => {
+const FunctionButtons = ({isAlbum, spotifyHref}: FunctionButtonsProps) => {
 
     const [isFollowing, setIsFollowing] = useState(false);
     const [isShuffling, setIsShuffling] = useState(false);
@@ -79,12 +81,7 @@ const FunctionButtons = ({isAlbum}: FunctionButtonsProps) => {
                 )}
             </div>
 
-            <div
-                role="button"
-                onClick={handleOpenEllipsisModal}
-            >
-                <Ellipsis className="w-10 h-10 text-neutral-400 hover:text-white transition" />
-            </div>
+            <MediaPageMenu onClick={handleOpenEllipsisModal} spotifyHref={spotifyHref as string} />
 
         </div>
     )
