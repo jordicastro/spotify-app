@@ -40,13 +40,13 @@ const Library = ({songs}: LibraryProps) => {
         <div
             className="flex flex-col gap-y-2 mt-4 px-3"
         >
-            {isLoggedIn && songs.map ( (song) => (
+            {/* {isLoggedIn && songs.map ( (song) => (
                 <MediaItem
                     onClick={() => {}}
                     key={song.id}
                     data={song}
                 />
-            ))}
+            ))} */}
         </div>
     </div>
   )

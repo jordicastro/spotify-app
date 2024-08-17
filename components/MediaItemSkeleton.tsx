@@ -1,27 +1,37 @@
 "use client";
 
+import { twMerge } from "tailwind-merge";
+
 interface MediaItemSkeletonProps {
     type: "media_item" | "media_item_card";
     num?: number;
     enumerate?: boolean;
+    isAlbum?: boolean;
 }
 
-const MediaItemSkeleton = ({type, num = 1, enumerate}: MediaItemSkeletonProps) => {
+const MediaItemSkeleton = ({type, num = 1, enumerate, isAlbum}: MediaItemSkeletonProps) => {
   return (
     <>
     
         {type === "media_item" && (
             <div
-                className="flex items-center gap-x-4 w-full"
+                className={twMerge(
+                    `flex items-center gap-x-4 w-full mt-4`,
+                    isAlbum && 'mt-4'
+
+                )}
             >
                 <div className="flex-1">
                     {Array.from({length: num}).map( (_, index) => (
                         <div
                             key={index}
-                            className="flex items-center relative gap-x-3 p-8 h-12 rounded-md w-full"
+                            className={twMerge(`
+                                flex items-center relative gap-x-3 p-8 h-12 rounded-md w-full`,
+                                isAlbum && 'mb-6'
+                            )}
                         >
                             {enumerate && (
-                                <p className="flex group-hover:hidden items-center justify-center text-neutral-400 tracking-wider">
+                                <p className="flex group-hover:hidden items-center justify-center text-neutral-400">
                                     {/* @ts-ignore */}
                                     {index + 1}.
                                 </p>
@@ -35,7 +45,7 @@ const MediaItemSkeleton = ({type, num = 1, enumerate}: MediaItemSkeletonProps) =
                             />
 
                             <div
-                                className="flex flex-col gap-y-2 overflow-hidden w-full"
+                                className="flex flex-col gap-y-4 overflow-hidden w-full"
                             >
                                 <div
                                     className="w-16 h-2 rounded-full bg-neutral-500 animate-pulse-fast "
@@ -50,7 +60,10 @@ const MediaItemSkeleton = ({type, num = 1, enumerate}: MediaItemSkeletonProps) =
                             </div>
 
                             <div
-                                className="absolute right-[80px] w-6 h-2 rounded-full bg-neutral-500 animate-pulse-fast"
+                                className={twMerge(`
+                                    absolute right-[80px] w-6 h-2 rounded-full bg-neutral-500 animate-pulse-fast`,
+                                    isAlbum && 'right-[55px]'
+                                )}
                                 style={{
                                     animationDelay: `${index * 0.05}s`
                                 }}

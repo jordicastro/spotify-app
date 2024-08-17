@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import { getArtistsByItem, removeQuotesFromUrl } from "@/actions/actions";
 import { on } from "events";
 import { useRouter } from "next/navigation";
+import MediaItemSkeleton from "./MediaItemSkeleton";
 
 
 interface HomeSectionProps {
@@ -54,9 +55,7 @@ const HomeSection = ({title, type}: HomeSectionProps) => {
           className="mt-4"
         >
           {newReleases.length === 0 ? (
-            <div className=" text-neutral-400">
-                No songs available
-            </div>
+              <MediaItemSkeleton type="media_item_card" num={10} />
           ) : (
             <div
                 className={twMerge(`
