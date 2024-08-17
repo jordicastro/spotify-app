@@ -3,7 +3,7 @@
 import { Ellipsis, Play } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useRef } from "react";
+import { LegacyRef, useRef } from "react";
 import { twMerge } from "tailwind-merge";
 import ItemMenu from "./ItemMenu";
 
@@ -27,7 +27,7 @@ interface MediaItemProps {
 }
 
 const MediaItem = ({name, imageUrl, subtext, subtextIsArtists, artists, id, artistId, albumId, enumerate, index, duration, onClick}: MediaItemProps) => {
-    const imageRef = useRef<HTMLDivElement>(null);
+    const imageRef = useRef<HTMLDivElement | null>(null);
     const router = useRouter();
 
 
@@ -79,7 +79,7 @@ const MediaItem = ({name, imageUrl, subtext, subtextIsArtists, artists, id, arti
             { !!imageUrl && (
 
             <Image
-                ref={imageRef}
+                ref={imageRef as LegacyRef<HTMLImageElement | null> | undefined}
                 fill
                 sizes="48px"
                 src={imageUrl || "/images/media_item_placeholder.svg"}
